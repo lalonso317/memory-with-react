@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import { deck } from '../values'
 
 export default function MainGame() {
+
+    // Setting the the states for the variables used in the compoenent
     const [values, setValues] = useState(deck)
     const [attempts, setAttempts] = useState(20)
     const [firstValue, setFirstValue] =useState([])
@@ -14,7 +16,7 @@ export default function MainGame() {
 
     const [stay, setStay] = useState()
 
-   
+   // Handles the shuffle of the deck in the values.js
     const shuffle = (values) =>{
         let currentIndex = values.length
         let temporaryValue
@@ -32,9 +34,14 @@ export default function MainGame() {
         console.log(newArray)
         return setValues(newArray)
       }
+
+      //currently has a button to shuffle the cards if needed
       const handleShuffle = () =>{
         shuffle(values)
       }
+
+      // this sets the class for the cards which is set on a onClick function, it passes the card.number => 
+      // the flip and flipTwo are set as the values in the newArray use later on 
       const Class = (e) => {
         if(flip === e){
             return 'facematch card'
@@ -45,11 +52,15 @@ export default function MainGame() {
         }
       }
      
+      // A Timeout function for the function of handleFlip, this is on a onClick funciton as well,
+      // given the checks passed in the handleFlip function it is set for half a second
       const Timeout = ({value}) =>{
       setTimeout(() =>{
         handleFlip({value})
     }, 500)
 }
+    // This function sets the states for the two cards that are being compared,
+    // when both values are set it runs the CheckPairs function
       const handleFlip = ({value}) =>{
           newArray.push(value)
           console.log(newArray, value)
@@ -57,18 +68,17 @@ export default function MainGame() {
           if(newArray[1] === value){
             setFlipTwo(newArray[1].number)
             secondValue.push(newArray[1])
-            console.log(secondValue)
             setTimeout(() =>{
             CheckPairs()
-            },700)
+            },600)
        
           }else if(newArray[0] === value){
             setFlip(newArray[0].number)
             firstValue.push(...newArray)
-            console.log(firstValue)
           } 
       }
-    
+    // this function checks if the pairs are equal if they are it is then pushed into a new Matched Array, 
+    // and then then states are set back to the inital state
       const CheckPairs = () =>{
         if(firstValue[0].value !== secondValue[0].value){
             setNewArray([])
@@ -84,32 +94,23 @@ export default function MainGame() {
             setNewArray([])
             setFirstValue([])
             setSecondValue([])
-            console.log(matched)
-            
-
+            console.log('MATCHED',matched)
           }
       }
 
-    //   const checkClass = (e) =>{
-    //     if(matched.number === e){
-    //         return `stay ${Class(e)}`
-    //     }
-    //     else if(!matched.includes(e)){
-    //         return `${Class(e)}`
-    //   }
-    // }
-    const Id = (e)=>{
-        console.log('stay', stay)
-    }
-    //   matched.includes(e) ? `stay${Class(e.number)}`: '' ? Class(e.number) 
-    
+    // If the cards match they get pushed into a array for checking if the equal the value
+    // It then adds an ID for them to stay flipped
+    let unique =[]
+    const match = matched.forEach(m => unique.push({val:m.value}))
+    const mach = unique.map(e => e.val)
+
     return (
         <div>
             <button onClick={handleShuffle}>Shuffle</button>
             <div className="card-container">
                 {values.map((e,i) => (
-                    <div   id="individual-card" className="wholecard" key={i}>
-                    <span onClick={() => {Timeout({value:e}); Id(e.value)}} id={Id()} className={Class(e.number)}></span>
+                    <div id="individual-card" className="wholecard" id={mach.includes(e.value) ? 'stay' : ''} key={i}>
+                    <span onClick={() => Timeout({value:e})} className={Class(e.number) }></span>
                     <span ><p>{e.value}</p></span>
                     </div>
                 ))}
@@ -117,5 +118,3 @@ export default function MainGame() {
         </div>
     )
 }
-// !flip ? "back card" : "front card"
-// flip ? 'back-single-card stay backmatch' : 'face-single-card stay facematch' 

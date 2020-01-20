@@ -39,17 +39,17 @@
 }
 
 /* transform gives the effect of the card flip*/
-#stay.backmatch{
-  transform: rotateY(-180deg);;
+#stay .backmatch{
+  transform: rotateY(180deg);;
 }
-#stay.facematch{
-  transform: rotateY(0);
+#stay .facematch{
+  transform: rotateY(180deg);
 }
 .facematch{
   transform: rotateY(180deg);
 } 
-#stay.facematchTwo{
-  transform: rotateY(0) !important;
+#stay .facematchTwo{
+  transform: rotateY(180deg) !important;
 }
 .facematchTwo{
   transform: rotateY(180deg) !important;
