@@ -1,38 +1,117 @@
-.App {
-  text-align: center;
+*,**,html{
+  box-sizing: border-box;
+  margin: 0;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.card-container{
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+#individual-card{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  transform: scale(0.9);
+  /* background: #ccc; */
+}
+.wholecard {
+  position: relative;
+  border-radius: 30px;
+  width: 10%;
+  height: 185px;
+  background: #41bb47;
+  transform: scale(0.8);
+  padding: 50px;
+}
+.card{
+  width:175px;
+  height: 235px;
+  position: absolute;
+  top: 6px;
+  border: 3px solid black;
+  border-radius: 30px;
+  background: red;
+  backface-visibility: hidden;
+  overflow: hidden;
+  transition: transform 500ms ease-in-out;
+  font-size: 50px;
 }
 
-.App-link {
-  color: #61dafb;
+/* transform gives the effect of the card flip*/
+#stay.backmatch{
+  transform: rotateY(-180deg);;
 }
+#stay.facematch{
+  transform: rotateY(0);
+}
+.facematch{
+  transform: rotateY(180deg);
+} 
+#stay.facematchTwo{
+  transform: rotateY(0) !important;
+}
+.facematchTwo{
+  transform: rotateY(180deg) !important;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+} 
+
+
+/* .face-up{
+  width: 16%;
+  width: 100%;
+  height: 270px;
+  background: red;
+  position: absolute;
+  backface-visibility: hidden;
+  overflow: hidden;
+  transition: transform 500ms ease-in-out;
 }
+.face-down{
+  margin: 0px;
+  width: 16%;
+  height: 175px;
+  background: aqua;
+  position: relative;
+} */
+/* .back-single-card{
+  background: rgb(174, 179, 251);
+  width: 55%;
+  height: 250px;
+  backface-visibility: hidden;
+}
+.face-single-card{
+  background: rgb(233, 124, 124);
+  width: 55%;
+  height: 250px;
+
+}
+.face-single-card-value{
+
+} */
+
+
+/* 
+.card{
+  width:175px;
+  height: 235px;
+  position: absolute;
+  top: 6px;
+  border: 3px solid black;
+  border-radius: 30px;
+  background: white;
+  backface-visibility: hidden;
+  overflow: hidden;
+  transition: transform 500ms ease-in-out;
+}
+.wholecard {
+  
+  position: relative;
+  border-radius: 30px;
+  width: 175px;
+  height: 175px;
+  background: #bb8241;
+  transform: scale(0.8);
+  padding: 50px;
+  transition: transform 500ms ease-in-out;
+} */
