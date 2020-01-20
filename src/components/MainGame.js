@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import { deck } from '../values'
+import { Link, Redirect } from 'react-router-dom'
 
-export default function MainGame() {
+export const  MainGame =()=> {
 
     // Setting the the states for the variables used in the compoenent
     const [values, setValues] = useState(deck)
-    const [attempts, setAttempts] = useState(20)
+    const [attempts, setAttempts] = useState(3)
     const [firstValue, setFirstValue] =useState([])
     const [secondValue, setSecondValue] = useState([])
     const [newArray, setNewArray] = useState([])
@@ -14,8 +15,10 @@ export default function MainGame() {
     const [flip, setFlip] = useState()
     const [flipTwo, setFlipTwo] = useState()
 
-    const [stay, setStay] = useState()
+    const [seconds, setSeconds] =useState(0)
+    const [minutes, setMinutes] = useState(0)
 
+    
    // Handles the shuffle of the deck in the values.js
     const shuffle = (values) =>{
         let currentIndex = values.length
@@ -36,10 +39,12 @@ export default function MainGame() {
       }
 
       //currently has a button to shuffle the cards if needed
-      const handleShuffle = () =>{
+      useEffect(() => {
         shuffle(values)
-      }
 
+      },[])
+      
+   
       // this sets the class for the cards which is set on a onClick function, it passes the card.number => 
       // the flip and flipTwo are set as the values in the newArray use later on 
       const Class = (e) => {
@@ -55,6 +60,7 @@ export default function MainGame() {
       // A Timeout function for the function of handleFlip, this is on a onClick funciton as well,
       // given the checks passed in the handleFlip function it is set for half a second
       const Timeout = ({value}) =>{
+
       setTimeout(() =>{
         handleFlip({value})
     }, 500)
@@ -81,6 +87,7 @@ export default function MainGame() {
     // and then then states are set back to the inital state
       const CheckPairs = () =>{
         if(firstValue[0].value !== secondValue[0].value){
+            setAttempts(attempts-1)
             setNewArray([])
             setFirstValue([])
             setSecondValue([])
@@ -98,6 +105,23 @@ export default function MainGame() {
           }
       }
 
+      
+    // var interval = setInterval( function time(){
+    //     $("#seconds").html(pad(++sec%60));
+    //     $("#minutes").html(pad(parseInt(sec/60,10)))
+    //     return ;
+    // }, 1000);
+        // var sec = 0
+
+        // var  pad = ( val )  => { return val > 9 ? val : "0" + val ;}
+        // setInterval(()=>{
+        //     const secs =pad(++sec%60)
+        //     const mins = pad(parseInt(sec/60,10))
+        //     return secs, mins
+        // },1000)
+    
+    
+
     // If the cards match they get pushed into a array for checking if the equal the value
     // It then adds an ID for them to stay flipped
     let unique =[]
@@ -106,8 +130,12 @@ export default function MainGame() {
 
     return (
         <div>
-            <button onClick={handleShuffle}>Shuffle</button>
+            {attempts === 0 ? (<Redirect to='/gameover'/>) : ('')}
+            <Link to='/'> <button>Go Home</button></Link>
+            {minutes}:{seconds}
             <div className="card-container">
+            <h3>{attempts}</h3>
+
                 {values.map((e,i) => (
                     <div id="individual-card" className="wholecard" id={mach.includes(e.value) ? 'stay' : ''} key={i}>
                     <span onClick={() => Timeout({value:e})} className={Class(e.number) }></span>
