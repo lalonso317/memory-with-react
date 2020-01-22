@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import { deck } from '../values'
 import { Link, Redirect } from 'react-router-dom'
+import Timer from 'react-compound-timer'
 
 export const  MainGame =()=> {
 
     // Setting the the states for the variables used in the compoenent
     const [values, setValues] = useState(deck)
-    const [attempts, setAttempts] = useState(3)
+    const [attempts, setAttempts] = useState(20)
     const [firstValue, setFirstValue] =useState([])
     const [secondValue, setSecondValue] = useState([])
     const [newArray, setNewArray] = useState([])
@@ -69,7 +70,6 @@ export const  MainGame =()=> {
     // when both values are set it runs the CheckPairs function
       const handleFlip = ({value}) =>{
           newArray.push(value)
-          console.log(newArray, value)
           
           if(newArray[1] === value){
             setFlipTwo(newArray[1].number)
@@ -95,13 +95,15 @@ export const  MainGame =()=> {
             setFlipTwo([])
           }else{
             matched.push(...firstValue)
+            setFirstValue([])
             matched.push(...secondValue)
+            setSecondValue([])
+            console.log(matched)
             setFlip([])
             setFlipTwo([])
             setNewArray([])
-            setFirstValue([])
-            setSecondValue([])
-            console.log('MATCHED',matched)
+            
+            
           }
       }
 
@@ -127,21 +129,31 @@ export const  MainGame =()=> {
     let unique =[]
     const match = matched.forEach(m => unique.push({val:m.value}))
     const mach = unique.map(e => e.val)
-
+    
+   
     return (
         <div>
-            {attempts === 0 ? (<Redirect to='/gameover'/>) : ('')}
-            <Link to='/'> <button>Go Home</button></Link>
-            {minutes}:{seconds}
-            <div className="card-container">
-            <h3>{attempts}</h3>
-
-                {values.map((e,i) => (
-                    <div id="individual-card" className="wholecard" id={mach.includes(e.value) ? 'stay' : ''} key={i}>
-                    <span onClick={() => Timeout({value:e})} className={Class(e.number) }></span>
-                    <span ><p>{e.value}</p></span>
+            <div className="game-main-container">
+                {attempts === 0 ? (<Redirect to='/gameover'/>) : ('')}
+                {matched.length === values.length ? (<Redirect to='/victory'/>) : ('') }
+                <div className="game-header">
+                <Link style={{textDecoration: 'none', color:'white'}}to='/'> <p className="game-home">Home</p></Link>
+                    <div className="game-attempts">{attempts}</div>
+                    <div className="game-clock">
+                    <Timer>
+                        <Timer.Minutes />:
+                        <Timer.Seconds /> 
+                    </Timer>
                     </div>
-                ))}
+                </div>
+                <div className="card-container">
+                    {values.map((e,i) => (
+                        <div id="individual-card" className="wholecard" id={mach.includes(e.value) ? 'stay' : ''} key={i}>
+                        <span onClick={() => Timeout({value:e})} className={Class(e.number) }></span>
+                        <span ><p className="card-values">{e.value}</p></span>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     )

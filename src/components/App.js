@@ -4,6 +4,7 @@ import '../App.css';
 import {MainGame} from './MainGame';
 import {Landing} from './Landing';
 import { Gameover } from './Gameover';
+import { Victory } from './Victory';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Switch>
           <Route exact path='/' component={Landing}/>
           <Route path='/main-game' component={MainGame}/>
+          <Route path='/victory' component={Victory}/>
           <Route path='/gameover' component={Gameover}/>
        </Switch>
       </header>
