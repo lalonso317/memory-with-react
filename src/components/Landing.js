@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Redirect} from 'react-router-dom'
 
-export const Landing = () =>{
+export const Landing = (props) =>{
     const [redirect, setRedirect] = useState(false)
 
     const handleRedirect = () =>{

@@ -3,7 +3,7 @@ import { deck } from '../values'
 import { Link, Redirect } from 'react-router-dom'
 import Timer from 'react-compound-timer'
 
-export const  MainGame =()=> {
+export const  MainGame = (props)=> {
 
     // Setting the the states for the variables used in the compoenent
     const [values, setValues] = useState(deck)
@@ -15,10 +15,6 @@ export const  MainGame =()=> {
 
     const [flip, setFlip] = useState()
     const [flipTwo, setFlipTwo] = useState()
-
-    const [seconds, setSeconds] =useState(0)
-    const [minutes, setMinutes] = useState(0)
-
     
    // Handles the shuffle of the deck in the values.js
     const shuffle = (values) =>{
@@ -35,7 +31,6 @@ export const  MainGame =()=> {
           newArray[currentIndex] = newArray[randomIndex]
           newArray[randomIndex] = temporaryValue
         }
-        console.log(newArray)
         return setValues(newArray)
       }
 
@@ -98,31 +93,13 @@ export const  MainGame =()=> {
             setFirstValue([])
             matched.push(...secondValue)
             setSecondValue([])
-            console.log(matched)
             setFlip([])
             setFlipTwo([])
             setNewArray([])
             
             
           }
-      }
-
-      
-    // var interval = setInterval( function time(){
-    //     $("#seconds").html(pad(++sec%60));
-    //     $("#minutes").html(pad(parseInt(sec/60,10)))
-    //     return ;
-    // }, 1000);
-        // var sec = 0
-
-        // var  pad = ( val )  => { return val > 9 ? val : "0" + val ;}
-        // setInterval(()=>{
-        //     const secs =pad(++sec%60)
-        //     const mins = pad(parseInt(sec/60,10))
-        //     return secs, mins
-        // },1000)
-    
-    
+      }    
 
     // If the cards match they get pushed into a array for checking if the equal the value
     // It then adds an ID for them to stay flipped
